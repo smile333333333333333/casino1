@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VOID ARCADE II</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#080808;
+    color:#eee;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    padding:20px;
+    border-bottom:1px solid #333;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    letter-spacing:4px;
+}
+
+.credits{
+    font-size:20px;
+}
+
+main{
+    max-width:1000px;
+    margin:auto;
+    padding:25px;
+}
+
+.panel{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    margin-bottom:20px;
+}
+
+.rooms{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.room{
+    border:1px solid #333;
+    background:#151515;
+    padding:25px;
+    min-height:220px;
+}
+
+.room:hover{
+    border-color:#aaa;
+}
+
+.icon{
+    font-size:50px;
+}
+
+button{
+    background:#181818;
+    border:1px solid #666;
+    color:white;
+    padding:12px 20px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#303030;
+}
+
+.room button{
+    width:100%;
+}
+
+.stat{
+    color:#999;
+    margin:8px 0;
+}
+
+footer{
+    text-align:center;
+    color:#444;
+    padding:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+VOID ARCADE II
+</div>
+
+<div class="credits">
+Credits:
+<strong id="credits">500</strong>
+</div>
+
+</header>
+
+
+<main>
+
+<div class="panel">
+
+<h1>WELCOME TO THE VOID</h1>
+
+<p>
+Choose a room.
+Your credits are shared between every room.
+</p>
+
+<p class="stat">
+Games played:
+<span id="played">0</span>
+</p>
+
+<p class="stat">
+Highest balance:
+<span id="best">500</span>
+</p>
+
+</div>
+
+
+<div class="rooms">
+
+<div class="room">
+
+<div class="icon">🍀</div>
+
+<h2>LUCK FLOOR</h2>
+
+<p>
+Games based around random events,
+choices and surprises.
+</p>
+
+<button onclick="location.href='luck.html'">
+ENTER ROOM
+</button>
+
+</div>
+
+
+<div class="room">
+
+<div class="icon">🃏</div>
+
+<h2>CARD ROOM</h2>
+
+<p>
+Original card games using the
+custom VOID deck.
+</p>
+
+<button onclick="location.href='cards.html'">
+ENTER ROOM
+</button>
+
+</div>
+
+
+<div class="room">
+
+<div class="icon">🎮</div>
+
+<h2>CHALLENGE FLOOR</h2>
+
+<p>
+Reaction, memory, precision and
+other arcade challenges.
+</p>
+
+<button onclick="location.href='games.html'">
+ENTER ROOM
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+
+<footer>
+VOID ARCADE II
+</footer>
+
+
+<script>
+
+/* =====================================
+   SHARED SAVE SYSTEM
+===================================== */
+
+const SAVE_KEY="voidArcadeII";
+
+const DEFAULT_DATA={
+    credits:500,
+    gamesPlayed:0,
+    totalEarned:0,
+    bestCredits:500,
+    level:1
+};
+
+
+function loadData(){
+
+    const saved=
+        localStorage.getItem(
+            SAVE_KEY
+        );
+
+    if(!saved){
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify(
+                DEFAULT_DATA
+            )
+        );
+
+        return {...DEFAULT_DATA};
+
+    }
+
+    try{
+
+        const data=
+            JSON.parse(saved);
+
+        return {
+            credits:
+                Number.isFinite(data.credits)
+                ? data.credits
+                : 500,
+
+            gamesPlayed:
+                Number.isFinite(data.gamesPlayed)
+                ? data.gamesPlayed
+                : 0,
+
+            totalEarned:
+                Number.isFinite(data.totalEarned)
+                ? data.totalEarned
+                : 0,
+
+            bestCredits:
+                Number.isFinite(data.bestCredits)
+                ? data.bestCredits
+                : 500,
+
+            level:
+                Number.isFinite(data.level)
+                ? data.level
+                : 1
+        };
+
+    }catch(e){
+
+        return {...DEFAULT_DATA};
+
+    }
+}
+
+
+function saveData(data){
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+const arcade=loadData();
+
+
+document.getElementById(
+    "credits"
+).textContent=
+    Math.floor(
+        arcade.credits
+    );
+
+
+document.getElementById(
+    "played"
+).textContent=
+    arcade.gamesPlayed;
+
+
+document.getElementById(
+    "best"
+).textContent=
+    Math.floor(
+        arcade.bestCredits
+    );
+
+</script>
+
+</body>
+  </html>
