@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>VOID ARCADE II</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top,#292929,#080808 65%);
+    color:#eee;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    background:#0a0a0a;
+    border-bottom:1px solid #333;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:22px;
+    letter-spacing:4px;
+    font-weight:bold;
+}
+
+.creditBox{
+    border:1px solid #555;
+    padding:10px 16px;
+    background:#151515;
+}
+
+#credits{
+    font-size:20px;
+    font-weight:bold;
+}
+
+main{
+    width:min(1100px,92%);
+    margin:auto;
+    padding:30px 0;
+}
+
+.hero{
+    text-align:center;
+    padding:45px 20px;
+    border:1px solid #333;
+    background:#101010;
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(35px,8vw,70px);
+    letter-spacing:8px;
+    margin:0 0 15px;
+}
+
+.hero p{
+    color:#999;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(160px,1fr));
+    gap:12px;
+    margin-top:25px;
+}
+
+.stat{
+    background:#151515;
+    border:1px solid #333;
+    padding:18px;
+}
+
+.statTitle{
+    color:#888;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+.statValue{
+    font-size:25px;
+    margin-top:8px;
+}
+
+.floorGrid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
+
+.floor{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    min-height:280px;
+    display:flex;
+    flex-direction:column;
+}
+
+.floor:hover{
+    border-color:#aaa;
+}
+
+.floorIcon{
+    font-size:50px;
+}
+
+.floor h2{
+    margin:12px 0 8px;
+}
+
+.floor p{
+    color:#999;
+    line-height:1.5;
+    flex:1;
+}
+
+button{
+    background:#181818;
+    color:#eee;
+    border:1px solid #666;
+    padding:13px 18px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#303030;
+    border-color:#aaa;
+}
+
+.floor button{
+    width:100%;
+}
+
+.info{
+    margin-top:25px;
+    background:#101010;
+    border:1px solid #333;
+    padding:22px;
+}
+
+.info h2{
+    margin-top:0;
+}
+
+.info p{
+    color:#888;
+    line-height:1.5;
+}
+
+footer{
+    text-align:center;
+    color:#444;
+    padding:40px 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+VOID ARCADE II
+</div>
+
+<div class="creditBox">
+CREDITS:
+<span id="credits">500</span>
+</div>
+
+</header>
+
+
+<main>
+
+
+<section class="hero">
+
+<h1>VOID ARCADE II</h1>
+
+<p>
+WELCOME TO THE SECOND FLOOR OF THE ARCADE
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<div class="statTitle">
+CURRENT CREDITS
+</div>
+<div
+class="statValue"
+id="statCredits">
+500
+</div>
+</div>
+
+<div class="stat">
+<div class="statTitle">
+GAMES PLAYED
+</div>
+<div
+class="statValue"
+id="gamesPlayed">
+0
+</div>
+</div>
+
+<div class="stat">
+<div class="statTitle">
+BEST BALANCE
+</div>
+<div
+class="statValue"
+id="bestCredits">
+500
+</div>
+</div>
+
+<div class="stat">
+<div class="statTitle">
+TOTAL EARNED
+</div>
+<div
+class="statValue"
+id="totalEarned">
+0
+</div>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="floorGrid">
+
+
+<div class="floor">
+
+<div class="floorIcon">
+🎲
+</div>
+
+<h2>LUCK FLOOR</h2>
+
+<p>
+Random challenges, strange machines,
+and games where luck can completely
+change your balance.
+</p>
+
+<button
+onclick="openFloor('luck.html')">
+ENTER LUCK FLOOR
+</button>
+
+</div>
+
+
+
+<div class="floor">
+
+<div class="floorIcon">
+🃏
+</div>
+
+<h2>CARD ROOM</h2>
+
+<p>
+Play original card games using the
+VOID deck. Build hands, remember cards,
+and challenge the strange rules.
+</p>
+
+<button
+onclick="openFloor('cards.html')">
+ENTER CARD ROOM
+</button>
+
+</div>
+
+
+
+<div class="floor">
+
+<div class="floorIcon">
+🧠
+</div>
+
+<h2>CHALLENGE FLOOR</h2>
+
+<p>
+Test reaction speed, memory,
+precision, timing, and other skills.
+</p>
+
+<button
+onclick="openFloor('games.html')">
+ENTER CHALLENGE FLOOR
+</button>
+
+</div>
+
+
+</section>
+
+
+
+<section class="info">
+
+<h2>HOW THE ARCADE WORKS</h2>
+
+<p>
+Every floor uses the same credit balance.
+Your credits are saved in your browser,
+so changing floors does not reset them.
+</p>
+
+<p>
+Games charge their entry cost when you
+start them. Successful games can give
+credits back as rewards.
+</p>
+
+<p>
+Your progress is stored under the shared
+save system:
+<strong>voidArcadeII</strong>
+</p>
+
+<button onclick="resetSave()">
+RESET ARCADE SAVE
+</button>
+
+</section>
+
+
+</main>
+
+
+<footer>
+VOID ARCADE II
+</footer>
+
+
+
+<script>
+
+/* ======================================
+   SHARED SAVE SYSTEM
+======================================
+
+   IMPORTANT:
+
+   Every file in the arcade MUST use:
+
+   voidArcadeII
+
+   as the localStorage key.
+
+====================================== */
+
+const SAVE_KEY = "voidArcadeII";
+
+
+const DEFAULT_SAVE = {
+
+    credits:500,
+
+    gamesPlayed:0,
+
+    totalEarned:0,
+
+    bestCredits:500,
+
+    level:1
+
+};
+
+
+
+/* ======================================
+   LOAD SAVE
+====================================== */
+
+function loadSave(){
+
+    const raw =
+        localStorage.getItem(
+            SAVE_KEY
+        );
+
+
+    if(!raw){
+
+        const fresh = {
+            ...DEFAULT_SAVE
+        };
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify(fresh)
+        );
+
+        return fresh;
+
+    }
+
+
+    try{
+
+        const data =
+            JSON.parse(raw);
+
+
+        if(
+            typeof data !== "object" ||
+            data === null
+        ){
+
+            throw new Error(
+                "Invalid save"
+            );
+
+        }
+
+
+        return {
+
+            credits:
+                Number.isFinite(
+                    Number(data.credits)
+                )
+                ?
+                Number(data.credits)
+                :
+                500,
+
+
+            gamesPlayed:
+                Number.isFinite(
+                    Number(data.gamesPlayed)
+                )
+                ?
+                Number(data.gamesPlayed)
+                :
+                0,
+
+
+            totalEarned:
+                Number.isFinite(
+                    Number(data.totalEarned)
+                )
+                ?
+                Number(data.totalEarned)
+                :
+                0,
+
+
+            bestCredits:
+                Number.isFinite(
+                    Number(data.bestCredits)
+                )
+                ?
+                Number(data.bestCredits)
+                :
+                500,
+
+
+            level:
+                Number.isFinite(
+                    Number(data.level)
+                )
+                ?
+                Number(data.level)
+                :
+                1
+
+        };
+
+    }catch(error){
+
+        const fresh = {
+            ...DEFAULT_SAVE
+        };
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify(fresh)
+        );
+
+        return fresh;
+
+    }
+
+}
+
+
+
+let arcade = loadSave();
+
+
+
+/* ======================================
+   SAVE
+====================================== */
+
+function save(){
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(arcade)
+    );
+
+}
+
+
+
+/* ======================================
+   DISPLAY
+====================================== */
+
+function updateDisplay(){
+
+    document.getElementById(
+        "credits"
+    ).textContent =
+        Math.floor(
+            arcade.credits
+        );
+
+
+    document.getElementById(
+        "statCredits"
+    ).textContent =
+        Math.floor(
+            arcade.credits
+        );
+
+
+    document.getElementById(
+        "gamesPlayed"
+    ).textContent =
+        arcade.gamesPlayed;
+
+
+    document.getElementById(
+        "bestCredits"
+    ).textContent =
+        Math.floor(
+            arcade.bestCredits
+        );
+
+
+    document.getElementById(
+        "totalEarned"
+    ).textContent =
+        Math.floor(
+            arcade.totalEarned
+        );
+
+}
+
+
+
+/* ======================================
+   OPEN FLOOR
+====================================== */
+
+function openFloor(file){
+
+    /*
+       Save BEFORE leaving the page.
+       This makes sure the newest balance
+       is written before navigation.
+    */
+
+    save();
+
+    window.location.href = file;
+
+}
+
+
+
+/* ======================================
+   RESET
+====================================== */
+
+function resetSave(){
+
+    const confirmed =
+        confirm(
+            "Reset all VOID ARCADE II progress?"
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    arcade = {
+        ...DEFAULT_SAVE
+    };
+
+
+    save();
+
+    updateDisplay();
+
+
+    alert(
+        "Arcade save reset."
+    );
+
+}
+
+
+
+/* ======================================
+   INITIALIZE
+====================================== */
+
+updateDisplay();
+
+
+/*
+   Save again whenever this page becomes
+   hidden or the player leaves it.
+*/
+
+window.addEventListener(
+    "pagehide",
+    save
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    save
+);
+
+</script>
+
+</body>
+  </html>
