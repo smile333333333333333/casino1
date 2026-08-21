@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>VOID ARCADE II</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+}
+
+body{
+    background:
+        radial-gradient(circle at top,#242424 0,#101010 35%,#050505 80%);
+    color:#eee;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+button{
+    font-family:inherit;
+}
+
+#app{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+
+/* HEADER */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+
+    padding:18px 20px;
+
+    background:#0d0d0d;
+    border:1px solid #333;
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,.8);
+
+    position:sticky;
+    top:10px;
+    z-index:10;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:5px;
+}
+
+.subtitle{
+    color:#777;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.moneyBox{
+    text-align:right;
+}
+
+.moneyLabel{
+    color:#777;
+    font-size:11px;
+}
+
+.money{
+    font-size:25px;
+    font-weight:bold;
+}
+
+
+/* GENERAL */
+
+.panel{
+    background:rgba(10,10,10,.92);
+    border:1px solid #292929;
+    padding:25px;
+    margin-top:20px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.35);
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+h1{
+    font-size:32px;
+}
+
+p{
+    line-height:1.5;
+}
+
+.small{
+    color:#777;
+    font-size:13px;
+}
+
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:45px 20px;
+}
+
+.heroTitle{
+    font-size:48px;
+    letter-spacing:8px;
+    margin-bottom:10px;
+}
+
+.heroText{
+    color:#999;
+    max-width:650px;
+    margin:0 auto 25px;
+}
+
+
+/* ARCADE GRID */
+
+.arcadeGrid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
+
+    gap:18px;
+}
+
+
+/* SECTION CARDS */
+
+.sectionCard{
+    background:#0d0d0d;
+
+    border:1px solid #303030;
+
+    padding:22px;
+
+    min-height:250px;
+
+    transition:
+        transform .15s,
+        border-color .15s,
+        background .15s;
+}
+
+.sectionCard:hover{
+    transform:translateY(-3px);
+    border-color:#666;
+    background:#131313;
+}
+
+.icon{
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+.sectionTitle{
+    font-size:23px;
+    margin-bottom:8px;
+}
+
+.sectionDescription{
+    color:#888;
+    min-height:65px;
+}
+
+
+/* BUTTONS */
+
+.playButton{
+    width:100%;
+
+    background:#171717;
+    color:white;
+
+    border:1px solid #555;
+
+    padding:13px;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.15s;
+}
+
+.playButton:hover{
+    background:#292929;
+    border-color:#aaa;
+}
+
+.disabledButton{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+
+/* STATS */
+
+.statsGrid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.stat{
+    background:#090909;
+    border:1px solid #222;
+    padding:16px;
+}
+
+.statLabel{
+    color:#666;
+    font-size:12px;
+}
+
+.statValue{
+    font-size:25px;
+    margin-top:5px;
+}
+
+
+/* PROGRESS */
+
+.progressOuter{
+    width:100%;
+    height:14px;
+
+    background:#222;
+
+    border:1px solid #333;
+
+    margin-top:10px;
+}
+
+.progressInner{
+    height:100%;
+    width:0%;
+
+    background:#eee;
+
+    transition:width .3s;
+}
+
+
+/* RESET */
+
+.reset{
+    margin-top:25px;
+
+    background:#100909;
+
+    border:1px solid #422;
+
+    color:#c88;
+
+    padding:10px 15px;
+
+    cursor:pointer;
+}
+
+.reset:hover{
+    background:#241010;
+}
+
+
+/* NOTICE */
+
+.notice{
+    border-left:3px solid #666;
+
+    padding:12px 15px;
+
+    color:#999;
+
+    background:#090909;
+}
+
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+
+    color:#444;
+
+    font-size:11px;
+
+    padding:40px 10px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    header{
+        position:relative;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .moneyBox{
+        text-align:left;
+    }
+
+    .heroTitle{
+        font-size:32px;
+        letter-spacing:4px;
+    }
+
+    .hero{
+        padding:30px 15px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div id="app">
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div>
+
+<div class="logo">
+VOID ARCADE II
+</div>
+
+<div class="subtitle">
+THE SECOND FLOOR
+</div>
+
+</div>
+
+
+<div class="moneyBox">
+
+<div class="moneyLabel">
+CREDITS
+</div>
+
+<div class="money">
+<span id="credits">500</span>
+</div>
+
+</div>
+
+</header>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="panel hero">
+
+<div class="heroTitle">
+VOID II
+</div>
+
+<p class="heroText">
+
+Welcome back.
+
+Three sections.
+Dozens of games.
+One credit balance.
+
+Complete challenges,
+earn credits,
+and unlock the deeper parts
+of the arcade.
+
+</p>
+
+</section>
+
+
+
+<!-- =========================
+     ARCADE
+========================= -->
+
+<section class="panel">
+
+<h1>
+ARCADE FLOOR
+</h1>
+
+<p class="small">
+Choose a section.
+Your credits and progress are shared
+between all sections.
+</p>
+
+
+<div class="arcadeGrid">
+
+
+<!-- CARD GAMES -->
+
+<div class="sectionCard">
+
+<div class="icon">
+🃏
+</div>
+
+<div class="sectionTitle">
+VOID CARDS
+</div>
+
+<div class="sectionDescription">
+
+Play games using the original
+VOID deck of cards.
+
+Build combinations,
+remember patterns,
+and beat the computer.
+
+</div>
+
+<button
+class="playButton"
+onclick="openSection('cards.html')"
+>
+
+ENTER CARD ROOM
+
+</button>
+
+</div>
+
+
+
+<!-- LUCK -->
+
+<div class="sectionCard">
+
+<div class="icon">
+🎲
+</div>
+
+<div class="sectionTitle">
+LUCK LAB
+</div>
+
+<div class="sectionDescription">
+
+A collection of unpredictable
+arcade challenges.
+
+Random events,
+mystery machines,
+and strange outcomes.
+
+</div>
+
+<button
+class="playButton"
+onclick="openSection('luck.html')"
+>
+
+ENTER LUCK LAB
+
+</button>
+
+</div>
+
+
+
+<!-- OTHER -->
+
+<div class="sectionCard">
+
+<div class="icon">
+⚡
+</div>
+
+<div class="sectionTitle">
+CHALLENGE FLOOR
+</div>
+
+<div class="sectionDescription">
+
+Reaction tests,
+memory challenges,
+dodging games,
+and other arcade experiments.
+
+</div>
+
+<button
+class="playButton"
+onclick="openSection('games.html')"
+>
+
+ENTER CHALLENGE FLOOR
+
+</button>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     PROGRESSION
+========================= -->
+
+<section class="panel">
+
+<h2>
+ARCADE PROGRESS
+</h2>
+
+<p class="small">
+Reach credit milestones to unlock
+additional challenges.
+</p>
+
+
+<div class="stat">
+
+<div class="statLabel">
+CURRENT CREDITS
+</div>
+
+<div class="statValue">
+<span id="progressCredits">
+500
+</span>
+</div>
+
+</div>
+
+
+<div class="progressOuter">
+
+<div
+id="progressBar"
+class="progressInner">
+</div>
+
+</div>
+
+
+<p id="nextUnlock"
+class="small">
+Next unlock: 1,000 credits
+</p>
+
+</section>
+
+
+
+<!-- =========================
+     STATS
+========================= -->
+
+<section class="panel">
+
+<h2>
+YOUR RECORD
+</h2>
+
+
+<div class="statsGrid">
+
+
+<div class="stat">
+
+<div class="statLabel">
+GAMES PLAYED
+</div>
+
+<div
+class="statValue"
+id="gamesPlayed">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statLabel">
+BEST CREDIT TOTAL
+</div>
+
+<div
+class="statValue"
+id="bestCredits">
+500
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statLabel">
+ARCADE LEVEL
+</div>
+
+<div
+class="statValue"
+id="arcadeLevel">
+1
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="statLabel">
+TOTAL EARNED
+</div>
+
+<div
+class="statValue"
+id="totalEarned">
+0
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     INFORMATION
+========================= -->
+
+<section class="panel">
+
+<h2>
+HOW IT WORKS
+</h2>
+
+<div class="notice">
+
+Games use fictional arcade credits.
+
+Each game has its own rules,
+entry requirements, challenges,
+and rewards.
+
+Your progress is automatically saved
+in this browser.
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     RESET
+========================= -->
+
+<section class="panel">
+
+<h3>
+SYSTEM
+</h3>
+
+<p class="small">
+Having trouble or want to start over?
+</p>
+
+<button
+class="reset"
+onclick="resetGame()"
+>
+RESET ARCADE DATA
+</button>
+
+</section>
+
+
+
+<footer>
+
+VOID ARCADE II<br>
+BUILD 2.0
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+/* ==========================================
+   VOID ARCADE II
+   MAIN HUB
+========================================== */
+
+
+/*
+    DEFAULT DATA
+*/
+
+const DEFAULT_DATA = {
+
+    credits:500,
+
+    bestCredits:500,
+
+    gamesPlayed:0,
+
+    totalEarned:0,
+
+    level:1
+
+};
+
+
+
+/*
+    LOAD DATA
+*/
+
+let arcadeData =
+    JSON.parse(
+        localStorage.getItem(
+            "voidArcadeII"
+        )
+    ) || {
+
+        ...DEFAULT_DATA
+
+    };
+
+
+
+/*
+    SAVE DATA
+*/
+
+function saveData(){
+
+    localStorage.setItem(
+
+        "voidArcadeII",
+
+        JSON.stringify(
+            arcadeData
+        )
+
+    );
+
+}
+
+
+
+/*
+    UPDATE EVERYTHING
+*/
+
+function updateDisplay(){
+
+    document.getElementById(
+        "credits"
+    ).textContent =
+        Math.floor(
+            arcadeData.credits
+        );
+
+
+    document.getElementById(
+        "progressCredits"
+    ).textContent =
+        Math.floor(
+            arcadeData.credits
+        );
+
+
+    document.getElementById(
+        "gamesPlayed"
+    ).textContent =
+        arcadeData.gamesPlayed;
+
+
+    document.getElementById(
+        "bestCredits"
+    ).textContent =
+        Math.floor(
+            arcadeData.bestCredits
+        );
+
+
+    document.getElementById(
+        "totalEarned"
+    ).textContent =
+        Math.floor(
+            arcadeData.totalEarned
+        );
+
+
+    document.getElementById(
+        "arcadeLevel"
+    ).textContent =
+        arcadeData.level;
+
+
+    updateProgress();
+
+    saveData();
+
+}
+
+
+
+/*
+    PROGRESSION
+*/
+
+function updateProgress(){
+
+    const milestones = [
+
+        0,
+
+        1000,
+
+        2000,
+
+        3500,
+
+        5000,
+
+        7500,
+
+        10000
+
+    ];
+
+
+    let currentMilestone = 0;
+
+    let nextMilestone = 1000;
+
+
+    for(
+        let i=0;
+        i<milestones.length;
+        i++
+    ){
+
+        if(
+            arcadeData.credits >=
+            milestones[i]
+        ){
+
+            currentMilestone =
+                milestones[i];
+
+            if(
+                i+1 <
+                milestones.length
+            ){
+
+                nextMilestone =
+                    milestones[i+1];
+
+            }else{
+
+                nextMilestone =
+                    milestones[i];
+
+            }
+
+        }
+
+    }
+
+
+    /*
+        LEVEL
+    */
+
+    arcadeData.level =
+        Math.max(
+
+            1,
+
+            Math.floor(
+                currentMilestone / 1000
+            ) + 1
+
+        );
+
+
+    /*
+        PROGRESS BAR
+    */
+
+    let percent;
+
+
+    if(
+        nextMilestone ===
+        currentMilestone
+    ){
+
+        percent=100;
+
+    }else{
+
+        percent =
+            (
+                (
+                    arcadeData.credits -
+                    currentMilestone
+                )
+                /
+                (
+                    nextMilestone -
+                    currentMilestone
+                )
+            ) * 100;
+
+    }
+
+
+    percent =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                percent
+            )
+        );
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        percent + "%";
+
+
+    /*
+        NEXT UNLOCK
+    */
+
+    const nextText =
+        document.getElementById(
+            "nextUnlock"
+        );
+
+
+    if(
+        nextMilestone ===
+        currentMilestone
+    ){
+
+        nextText.textContent =
+            "All current milestones unlocked.";
+
+    }else{
+
+        nextText.textContent =
+            "Next unlock: " +
+            nextMilestone.toLocaleString() +
+            " credits";
+
+    }
+
+}
+
+
+
+/*
+    OPEN SECTION
+*/
+
+function openSection(file){
+
+    /*
+        These pages will be created
+        as Files 2, 3 and 4.
+
+        The shared save system means
+        every page can use the same
+        localStorage key.
+    */
+
+    window.location.href =
+        file;
+
+}
+
+
+
+/*
+    ADD CREDITS
+    Used by future game files.
+*/
+
+function addCredits(amount){
+
+    amount =
+        Number(amount) || 0;
+
+
+    if(amount>0){
+
+        arcadeData.totalEarned +=
+            amount;
+
+    }
+
+
+    arcadeData.credits +=
+        amount;
+
+
+    if(
+        arcadeData.credits >
+        arcadeData.bestCredits
+    ){
+
+        arcadeData.bestCredits =
+            arcadeData.credits;
+
+    }
+
+
+    updateDisplay();
+
+}
+
+
+
+/*
+    SPEND CREDITS
+    Used by future game files.
+*/
+
+function spendCredits(amount){
+
+    amount =
+        Number(amount) || 0;
+
+
+    if(
+        amount <= 0
+    ){
+
+        return false;
+
+    }
+
+
+    if(
+        arcadeData.credits <
+        amount
+    ){
+
+        return false;
+
+    }
+
+
+    arcadeData.credits -=
+        amount;
+
+
+    updateDisplay();
+
+
+    return true;
+
+}
+
+
+
+/*
+    RECORD GAME
+*/
+
+function recordGame(){
+
+    arcadeData.gamesPlayed++;
+
+    updateDisplay();
+
+}
+
+
+
+/*
+    RESET
+*/
+
+function resetGame(){
+
+    const answer =
+        confirm(
+            "Reset all VOID ARCADE II data?"
+        );
+
+
+    if(!answer){
+
+        return;
+
+    }
+
+
+    arcadeData =
+        {
+
+            ...DEFAULT_DATA
+
+        };
+
+
+    saveData();
+
+    updateDisplay();
+
+    alert(
+        "Arcade data reset."
+    );
+
+}
+
+
+
+/*
+    GLOBAL API
+    Other game files can use these.
+
+    Example:
+
+    VOID_ARCADE.spend(50)
+
+    VOID_ARCADE.reward(100)
+
+    VOID_ARCADE.played()
+*/
+
+window.VOID_ARCADE = {
+
+    getCredits:function(){
+
+        return arcadeData.credits;
+
+    },
+
+
+    spend:function(amount){
+
+        return spendCredits(
+            amount
+        );
+
+    },
+
+
+    reward:function(amount){
+
+        addCredits(
+            amount
+        );
+
+    },
+
+
+    played:function(){
+
+        recordGame();
+
+    },
+
+
+    getLevel:function(){
+
+        return arcadeData.level;
+
+    },
+
+
+    getData:function(){
+
+        return arcadeData;
+
+    },
+
+
+    save:function(){
+
+        saveData();
+
+    }
+
+};
+
+
+
+/*
+    START
+*/
+
+updateDisplay();
+
+</script>
+
+</body>
+</html>
