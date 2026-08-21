@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VOID ARCADE II - LUCK FLOOR</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#080808;
+    color:#eee;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    background:#111;
+    border-bottom:1px solid #444;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:bold;
+    letter-spacing:4px;
+}
+
+.credits{
+    background:#1b1b1b;
+    border:1px solid #555;
+    padding:10px 15px;
+}
+
+main{
+    width:92%;
+    max-width:1050px;
+    margin:auto;
+    padding:25px 0;
+}
+
+.panel{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;
+}
+
+.game{
+    background:#181818;
+    border:1px solid #444;
+    padding:20px;
+    min-height:250px;
+    display:flex;
+    flex-direction:column;
+}
+
+.game:hover{
+    border-color:#aaa;
+}
+
+.icon{
+    font-size:42px;
+}
+
+.game p{
+    color:#999;
+    line-height:1.5;
+    flex:1;
+}
+
+button{
+    background:#1d1d1d;
+    color:#fff;
+    border:1px solid #666;
+    padding:12px 18px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#333;
+}
+
+.center{
+    text-align:center;
+}
+
+.big{
+    font-size:70px;
+    margin:25px;
+}
+
+.choices{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:25px 0;
+}
+
+.choices button{
+    min-width:100px;
+}
+
+.coin{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:5px solid #777;
+    margin:25px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.doors{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin:30px 0;
+}
+
+.door{
+    width:120px;
+    height:160px;
+    font-size:40px;
+}
+
+.spinner{
+    width:180px;
+    height:180px;
+    border:7px solid #777;
+    border-radius:50%;
+    margin:25px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+}
+
+input{
+    background:#111;
+    color:#fff;
+    border:1px solid #666;
+    padding:12px;
+    font-size:18px;
+    text-align:center;
+}
+
+.message{
+    min-height:35px;
+    margin:20px;
+    color:#aaa;
+}
+
+footer{
+    text-align:center;
+    color:#444;
+    padding:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+LUCK FLOOR
+</div>
+
+<div class="credits">
+CREDITS:
+<strong id="credits">500</strong>
+</div>
+
+</header>
+
+
+<main>
+
+<!-- HOME -->
+
+<section id="home">
+
+<div class="panel">
+
+<h1>LUCK FLOOR</h1>
+
+<p>
+Play the arcade's collection of
+randomized challenge games.
+</p>
+
+<p>
+Your credits are shared across the
+entire VOID ARCADE.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+<div class="game">
+
+<div class="icon">🪙</div>
+
+<h2>COIN CHALLENGE</h2>
+
+<p>
+Choose heads or tails and see whether
+your prediction is correct.
+</p>
+
+<button onclick="startGame('coin')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🎲</div>
+
+<h2>DICE CHALLENGE</h2>
+
+<p>
+Guess the total of two dice.
+Closer guesses receive more points.
+</p>
+
+<button onclick="startGame('dice')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🚪</div>
+
+<h2>THREE DOORS</h2>
+
+<p>
+Choose a door and reveal what was
+behind it.
+</p>
+
+<button onclick="startGame('doors')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🎡</div>
+
+<h2>VOID SPINNER</h2>
+
+<p>
+Stop the spinning number and try to
+land in a high-value zone.
+</p>
+
+<button onclick="startGame('spinner')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🔢</div>
+
+<h2>GUESS THE NUMBER</h2>
+
+<p>
+Find the hidden number between
+1 and 20.
+</p>
+
+<button onclick="startGame('guess')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🌑</div>
+
+<h2>VOID CHOICE</h2>
+
+<p>
+Complete three mysterious choices
+in a row.
+</p>
+
+<button onclick="startGame('void')">
+PLAY
+</button>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<button onclick="location.href='index.html'">
+← MAIN ARCADE
+</button>
+
+</div>
+
+</section>
+
+
+<!-- GAME -->
+
+<section
+id="game"
+style="display:none">
+
+<div class="panel">
+
+<div id="gameArea"></div>
+
+<br>
+
+<button onclick="home()">
+← LEAVE GAME
+</button>
+
+</div>
+
+</section>
+
+
+<!-- RESULT -->
+
+<section
+id="result"
+style="display:none">
+
+<div class="panel center">
+
+<h1>RESULT</h1>
+
+<div id="resultText"></div>
+
+<button onclick="home()">
+BACK TO LUCK FLOOR
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+VOID ARCADE II
+</footer>
+
+
+<script>
+
+/* =========================================
+   SHARED SAVE
+========================================= */
+
+const SAVE_KEY = "voidArcadeII";
+
+const DEFAULT_DATA = {
+    credits:500,
+    gamesPlayed:0,
+    totalEarned:0,
+    bestCredits:500,
+    level:1
+};
+
+
+function loadData(){
+
+    let data;
+
+    try{
+
+        data =
+            JSON.parse(
+                localStorage.getItem(SAVE_KEY)
+            );
+
+    }catch(error){
+
+        data = null;
+
+    }
+
+
+    if(
+        !data ||
+        typeof data !== "object"
+    ){
+
+        data = {
+            ...DEFAULT_DATA
+        };
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify(data)
+        );
+
+    }
+
+
+    if(
+        typeof data.credits !== "number"
+    ){
+
+        data.credits = 500;
+
+    }
+
+
+    if(
+        typeof data.gamesPlayed !== "number"
+    ){
+
+        data.gamesPlayed = 0;
+
+    }
+
+
+    if(
+        typeof data.totalEarned !== "number"
+    ){
+
+        data.totalEarned = 0;
+
+    }
+
+
+    if(
+        typeof data.bestCredits !== "number"
+    ){
+
+        data.bestCredits = data.credits;
+
+    }
+
+
+    if(
+        typeof data.level !== "number"
+    ){
+
+        data.level = 1;
+
+    }
+
+
+    return data;
+
+}
+
+
+let data = loadData();
+
+
+function save(){
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+function updateCredits(){
+
+    document.getElementById(
+        "credits"
+    ).textContent =
+        Math.floor(data.credits);
+
+}
+
+
+/* =========================================
+   CREDIT FUNCTIONS
+========================================= */
+
+function addCredits(amount){
+
+    amount =
+        Math.max(
+            0,
+            Math.floor(amount)
+        );
+
+
+    data.credits += amount;
+
+    data.totalEarned += amount;
+
+
+    if(
+        data.credits >
+        data.bestCredits
+    ){
+
+        data.bestCredits =
+            data.credits;
+
+    }
+
+
+    save();
+    updateCredits();
+
+}
+
+
+function recordGame(){
+
+    data.gamesPlayed++;
+
+    save();
+
+}
+
+
+/*
+This is a simple arcade entry system.
+The player spends a small number of
+credits to start a challenge.
+*/
+
+function enterGame(cost){
+
+    if(
+        data.credits < cost
+    ){
+
+        alert(
+            "Not enough credits!"
+        );
+
+        return false;
+
+    }
+
+
+    data.credits -= cost;
+
+    save();
+
+    updateCredits();
+
+    return true;
+
+}
+
+
+/* =========================================
+   SCREEN CONTROL
+========================================= */
+
+function showGame(){
+
+    document.getElementById(
+        "home"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "game"
+    ).style.display =
+        "block";
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "none";
+
+}
+
+
+function showResult(){
+
+    document.getElementById(
+        "home"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "game"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "block";
+
+}
+
+
+function home(){
+
+    document.getElementById(
+        "home"
+    ).style.display =
+        "block";
+
+    document.getElementById(
+        "game"
+    ).style.display =
+        "none";
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =========================================
+   FINISH GAME
+========================================= */
+
+function finish(
+    reward,
+    message
+){
+
+    recordGame();
+
+    addCredits(reward);
+
+
+    document.getElementById(
+        "resultText"
+    ).innerHTML = `
+
+        <div class="big">
+            ${reward}
+        </div>
+
+        <p>
+            ${message}
+        </p>
+
+        <p>
+            You received
+            <strong>
+                ${reward}
+            </strong>
+            credits.
+        </p>
+
+        <p>
+            Current credits:
+            <strong>
+                ${Math.floor(data.credits)}
+            </strong>
+        </p>
+
+    `;
+
+
+    showResult();
+
+}
+
+
+/* =========================================
+   START GAME
+========================================= */
+
+function startGame(type){
+
+    const costs = {
+
+        coin:10,
+        dice:10,
+        doors:10,
+        spinner:10,
+        guess:10,
+        void:10
+
+    };
+
+
+    if(
+        !enterGame(
+            costs[type]
+        )
+    ){
+
+        return;
+
+    }
+
+
+    showGame();
+
+
+    if(type === "coin"){
+        coinGame();
+    }
+
+    else if(type === "dice"){
+        diceGame();
+    }
+
+    else if(type === "doors"){
+        doorGame();
+    }
+
+    else if(type === "spinner"){
+        spinnerGame();
+    }
+
+    else if(type === "guess"){
+        guessGame();
+    }
+
+    else if(type === "void"){
+        voidGame();
+    }
+
+}
+
+
+/* =========================================
+   COIN
+========================================= */
+
+function coinGame(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML = `
+
+        <div class="center">
+
+            <h1>COIN CHALLENGE</h1>
+
+            <div
+            id="coin"
+            class="coin">
+                ?
+            </div>
+
+            <p>
+                Choose a side.
+            </p>
+
+            <div class="choices">
+
+                <button
+                onclick="flipCoin('HEADS')">
+                    HEADS
+                </button>
+
+                <button
+                onclick="flipCoin('TAILS')">
+                    TAILS
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function flipCoin(choice){
+
+    const result =
+        Math.random() < 0.5
+        ?
+        "HEADS"
+        :
+        "TAILS";
+
+
+    document.getElementById(
+        "coin"
+    ).textContent =
+        result;
+
+
+    const reward =
+        choice === result
+        ?
+        50
+        :
+        0;
+
+
+    setTimeout(
+        function(){
+
+            finish(
+                reward,
+                choice === result
+                ?
+                "Correct prediction!"
+                :
+                "The prediction was incorrect."
+            );
+
+        },
+        600
+    );
+
+}
+
+
+/* =========================================
+   DICE
+========================================= */
+
+function diceGame(){
+
+    let buttons = "";
+
+
+    for(
+        let i=2;
+        i<=12;
+        i++
+    ){
+
+        buttons += `
+
+            <button
+            onclick="rollDice(${i})">
+                ${i}
+            </button>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML = `
+
+        <div class="center">
+
+            <h1>DICE CHALLENGE</h1>
+
+            <p>
+                Guess the total.
+            </p>
+
+            <div class="choices">
+                ${buttons}
+            </div>
+
+            <div
+            id="diceMessage"
+            class="message">
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function rollDice(guess){
+
+    const a =
+        Math.floor(
+            Math.random()*6
+        )+1;
+
+
+    const b =
+        Math.floor(
+            Math.random()*6
+        )+1;
+
+
+    const total =
+        a+b;
+
+
+    const distance =
+        Math.abs(
+            guess-total
+        );
+
+
+    let reward=0;
+
+
+    if(distance===0)
+        reward=100;
+
+    else if(distance===1)
+        reward=60;
+
+    else if(distance===2)
+        reward=30;
+
+
+    finish(
+        reward,
+        `The dice were
+        <strong>
+        ${a} + ${b} = ${total}
+        </strong>.`
+    );
+
+}
+
+
+/* =========================================
+   THREE DOORS
+========================================= */
+
+function doorGame(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML = `
+
+        <div class="center">
+
+            <h1>THREE DOORS</h1>
+
+            <p>
+                Choose one.
+            </p>
+
+            <div class="doors">
+
+                <button
+                class="door"
+                onclick="chooseDoor(1)">
+                    🚪<br>1
+                </button>
+
+                <button
+                class="door"
+                onclick="chooseDoor(2)">
+                    🚪<br>2
+                </button>
+
+                <button
+                class="door"
+                onclick="chooseDoor(3)">
+                    🚪<br>3
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function chooseDoor(choice){
+
+    const winning =
+        Math.floor(
+            Math.random()*3
+        )+1;
+
+
+    const reward =
+        choice === winning
+        ?
+        100
+        :
+        0;
+
+
+    finish(
+        reward,
+        choice === winning
+        ?
+        "You found the prize door!"
+        :
+        "The prize was behind door "
+        + winning
+        + "."
+    );
+
+}
+
+
+/* =========================================
+   SPINNER
+========================================= */
+
+function spinnerGame(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML = `
+
+        <div class="center">
+
+            <h1>VOID SPINNER</h1>
+
+            <div
+            id="spinner"
+            class="spinner">
+                0
+            </div>
+
+            <button
+            onclick="spin()">
+                SPIN
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function spin(){
+
+    const spinner =
+        document.getElementById(
+            "spinner"
+        );
+
+
+    let count=0;
+
+
+    const timer =
+        setInterval(
+            function(){
+
+                count++;
+
+
+                spinner.textContent =
+                    Math.floor(
+                        Math.random()*100
+                    );
+
+
+                if(
+                    count>=25
+                ){
+
+                    clearInterval(timer);
+
+
+                    const number =
+                        Math.floor(
+                            Math.random()*100
+                        );
+
+
+                    spinner.textContent =
+                        number;
+
+
+                    let reward=0;
+
+
+                    if(number>=90)
+                        reward=150;
+
+                    else if(number>=70)
+                        reward=75;
+
+                    else if(number>=50)
+                        reward=30;
+
+
+                    setTimeout(
+                        function(){
+
+                            finish(
+                                reward,
+                                "The spinner stopped at "
+                                + number
+                                + "."
+                            );
+
+                        },
+                        500
+                    );
+
+                }
+
+            },
+            60
+        );
+
+}
+
+
+/* =========================================
+   GUESS NUMBER
+========================================= */
+
+function guessGame(){
+
+    window.secret =
+        Math.floor(
+            Math.random()*20
+        )+1;
+
+
+    window.attempts=0;
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML = `
+
+        <div class="center">
+
+            <h1>GUESS THE NUMBER</h1>
+
+            <p>
+                Find the hidden number from
+                1 to 20.
+            </p>
+
+            <input
+            id="guess"
+            type="number"
+            min="1"
+            max="20">
+
+            <button
+            onclick="makeGuess()">
+                GUESS
+            </button>
+
+            <div
+            id="guessMessage"
+            class="message">
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function makeGuess(){
+
+    const input =
+        document.getElementById(
+            "guess"
+        );
+
+
+    const value =
+        Number(
+            input.value
+        );
+
+
+    if(
+        value<1 ||
+        value>20
+    ){
+
+        return;
+
+    }
+
+
+    window.attempts++;
+
+
+    if(
+        value === window.secret
+    ){
+
+        finish(
+            150,
+            "You found the hidden number!"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        window.attempts>=5
+    ){
+
+        finish(
+            0,
+            "The number was "
+            + window.secret
+            + "."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "guessMessage"
+    ).textContent =
+        value < window.secret
+        ?
+        "Higher!"
+        :
+        "Lower!";
+
+}
+
+
+/* =========================================
+   VOID CHOICE
+========================================= */
+
+function voidGame(){
+
+    window.voidRound=1;
+
+    nextVoidRound();
+
+}
+
+
+function nextVoidRound(){
+
+    window.safe =
+        Math.floor(
+            Math.random()*3
+        )+1;
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML = `
+
+        <div class="center">
+
+            <h1>VOID CHOICE</h1>
+
+            <p>
+                Round
+                ${window.voidRound}
+                of 3
+            </p>
+
+            <div class="choices">
+
+                <button onclick="voidPick(1)">
+                    ○
+                </button>
+
+                <button onclick="voidPick(2)">
+                    △
+                </button>
+
+                <button onclick="voidPick(3)">
+                    □
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function voidPick(choice){
+
+    if(
+        choice !== window.safe
+    ){
+
+        finish(
+            0,
+            "The VOID rejected your choice."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        window.voidRound>=3
+    ){
+
+        finish(
+            200,
+            "You survived all three rounds!"
+        );
+
+        return;
+
+    }
+
+
+    window.voidRound++;
+
+    nextVoidRound();
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+updateCredits();
+
+
+window.addEventListener(
+    "pagehide",
+    save
+);
+
+</script>
+
+</body>
+</html>
