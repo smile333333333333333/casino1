@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VOID ARCADE II - CARD FLOOR</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#080808;
+    color:#eee;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    background:#111;
+    border-bottom:1px solid #444;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:bold;
+    letter-spacing:4px;
+}
+
+.credits{
+    background:#1b1b1b;
+    border:1px solid #555;
+    padding:10px 15px;
+}
+
+main{
+    width:92%;
+    max-width:1050px;
+    margin:auto;
+    padding:25px 0;
+}
+
+.panel{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;
+}
+
+.game{
+    background:#181818;
+    border:1px solid #444;
+    padding:20px;
+    min-height:250px;
+    display:flex;
+    flex-direction:column;
+}
+
+.game:hover{
+    border-color:#aaa;
+}
+
+.icon{
+    font-size:42px;
+}
+
+.game p{
+    color:#999;
+    line-height:1.5;
+    flex:1;
+}
+
+button{
+    background:#1d1d1d;
+    color:#fff;
+    border:1px solid #666;
+    padding:12px 18px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#333;
+}
+
+.center{
+    text-align:center;
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:25px 0;
+}
+
+.card{
+    width:80px;
+    height:115px;
+    background:#eee;
+    color:#111;
+    border-radius:8px;
+    border:3px solid #aaa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    font-size:25px;
+}
+
+.red{
+    color:#b00000;
+}
+
+.choiceRow{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:25px 0;
+}
+
+.choiceRow button{
+    min-width:100px;
+}
+
+.big{
+    font-size:60px;
+    margin:25px;
+}
+
+.message{
+    min-height:35px;
+    margin:20px;
+    color:#aaa;
+}
+
+footer{
+    text-align:center;
+    color:#444;
+    padding:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+CARD FLOOR
+</div>
+
+<div class="credits">
+CREDITS:
+<strong id="credits">500</strong>
+</div>
+
+</header>
+
+
+<main>
+
+<section id="home">
+
+<div class="panel">
+
+<h1>VOID CARD FLOOR</h1>
+
+<p>
+A collection of strange arcade
+card challenges.
+</p>
+
+<p>
+Your credits are shared with the
+rest of the arcade.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+<div class="game">
+
+<div class="icon">🃏</div>
+
+<h2>HIGH CARD</h2>
+
+<p>
+Draw a card. Higher cards produce
+larger rewards.
+</p>
+
+<button onclick="startGame('high')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">⚔️</div>
+
+<h2>CARD DUEL</h2>
+
+<p>
+Draw against the arcade and see
+whose card is higher.
+</p>
+
+<button onclick="startGame('duel')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🔢</div>
+
+<h2>VOID 21</h2>
+
+<p>
+Draw cards and try to reach 21
+without going over.
+</p>
+
+<button onclick="startGame('21')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🎴</div>
+
+<h2>ODD OR EVEN</h2>
+
+<p>
+Predict whether the next card's
+number is odd or even.
+</p>
+
+<button onclick="startGame('odd')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">👑</div>
+
+<h2>ROYAL DRAW</h2>
+
+<p>
+Draw five cards and see how many
+royal cards appear.
+</p>
+
+<button onclick="startGame('royal')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🧠</div>
+
+<h2>CARD MEMORY</h2>
+
+<p>
+Remember a sequence of cards and
+repeat it.
+</p>
+
+<button onclick="startGame('memory')">
+PLAY
+</button>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<button onclick="location.href='index.html'">
+← MAIN ARCADE
+</button>
+
+</div>
+
+</section>
+
+
+<section
+id="game"
+style="display:none">
+
+<div class="panel">
+
+<div id="gameArea"></div>
+
+<br>
+
+<button onclick="home()">
+← LEAVE GAME
+</button>
+
+</div>
+
+</section>
+
+
+<section
+id="result"
+style="display:none">
+
+<div class="panel center">
+
+<h1>RESULT</h1>
+
+<div id="resultText"></div>
+
+<button onclick="home()">
+BACK TO CARD FLOOR
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+VOID ARCADE II
+</footer>
+
+
+<script>
+
+/* =========================================
+   SHARED SAVE
+========================================= */
+
+const SAVE_KEY="voidArcadeII";
+
+const DEFAULT_DATA={
+    credits:500,
+    gamesPlayed:0,
+    totalEarned:0,
+    bestCredits:500,
+    level:1
+};
+
+
+function loadData(){
+
+    let data=null;
+
+    try{
+        data=JSON.parse(
+            localStorage.getItem(SAVE_KEY)
+        );
+    }catch(error){
+        data=null;
+    }
+
+    if(
+        !data ||
+        typeof data!=="object"
+    ){
+
+        data={
+            ...DEFAULT_DATA
+        };
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify(data)
+        );
+
+    }
+
+    if(typeof data.credits!=="number")
+        data.credits=500;
+
+    if(typeof data.gamesPlayed!=="number")
+        data.gamesPlayed=0;
+
+    if(typeof data.totalEarned!=="number")
+        data.totalEarned=0;
+
+    if(typeof data.bestCredits!=="number")
+        data.bestCredits=data.credits;
+
+    if(typeof data.level!=="number")
+        data.level=1;
+
+    return data;
+}
+
+
+let data=loadData();
+
+
+function save(){
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+function updateCredits(){
+
+    document.getElementById(
+        "credits"
+    ).textContent=
+        Math.floor(data.credits);
+
+}
+
+
+function enterGame(cost){
+
+    if(data.credits<cost){
+
+        alert("Not enough credits!");
+
+        return false;
+    }
+
+    data.credits-=cost;
+
+    save();
+    updateCredits();
+
+    return true;
+}
+
+
+function reward(amount){
+
+    amount=Math.max(
+        0,
+        Math.floor(amount)
+    );
+
+    data.credits+=amount;
+
+    data.totalEarned+=amount;
+
+    if(data.credits>data.bestCredits)
+        data.bestCredits=data.credits;
+
+    save();
+    updateCredits();
+}
+
+
+function recordGame(){
+
+    data.gamesPlayed++;
+
+    save();
+
+}
+
+
+/* =========================================
+   SCREENS
+========================================= */
+
+function showGame(){
+
+    document.getElementById("home")
+        .style.display="none";
+
+    document.getElementById("game")
+        .style.display="block";
+
+    document.getElementById("result")
+        .style.display="none";
+
+}
+
+
+function showResult(){
+
+    document.getElementById("home")
+        .style.display="none";
+
+    document.getElementById("game")
+        .style.display="none";
+
+    document.getElementById("result")
+        .style.display="block";
+
+}
+
+
+function home(){
+
+    document.getElementById("home")
+        .style.display="block";
+
+    document.getElementById("game")
+        .style.display="none";
+
+    document.getElementById("result")
+        .style.display="none";
+
+}
+
+
+/* =========================================
+   FINISH
+========================================= */
+
+function finish(rewardAmount,message){
+
+    recordGame();
+
+    reward(rewardAmount);
+
+    document.getElementById(
+        "resultText"
+    ).innerHTML=`
+
+        <div class="big">
+            +${rewardAmount}
+        </div>
+
+        <p>
+            ${message}
+        </p>
+
+        <p>
+            Credits:
+            <strong>
+                ${Math.floor(data.credits)}
+            </strong>
+        </p>
+
+    `;
+
+    showResult();
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+function startGame(type){
+
+    const costs={
+        high:10,
+        duel:10,
+        "21":10,
+        odd:10,
+        royal:10,
+        memory:10
+    };
+
+    if(
+        !enterGame(costs[type])
+    ){
+        return;
+    }
+
+    showGame();
+
+    if(type==="high")
+        highCard();
+
+    else if(type==="duel")
+        duel();
+
+    else if(type==="21")
+        twentyOne();
+
+    else if(type==="odd")
+        oddEven();
+
+    else if(type==="royal")
+        royalDraw();
+
+    else if(type==="memory")
+        memoryGame();
+
+}
+
+
+/* =========================================
+   CARD SYSTEM
+========================================= */
+
+const suits=[
+    "♠",
+    "♥",
+    "♦",
+    "♣"
+];
+
+
+function makeCard(){
+
+    return{
+        value:
+            Math.floor(
+                Math.random()*13
+            )+1,
+
+        suit:
+            suits[
+                Math.floor(
+                    Math.random()*4
+                )
+            ]
+    };
+
+}
+
+
+function cardName(card){
+
+    let value;
+
+    if(card.value===1)
+        value="A";
+
+    else if(card.value===11)
+        value="J";
+
+    else if(card.value===12)
+        value="Q";
+
+    else if(card.value===13)
+        value="K";
+
+    else
+        value=card.value;
+
+    return value+card.suit;
+}
+
+
+function cardHTML(card){
+
+    const red=
+        card.suit==="♥" ||
+        card.suit==="♦";
+
+    return`
+
+        <div class="card ${red?"red":""}">
+            ${cardName(card)}
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   HIGH CARD
+========================================= */
+
+function highCard(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>HIGH CARD</h1>
+
+            <p>
+                Draw your card.
+            </p>
+
+            <button onclick="drawHigh()">
+                DRAW CARD
+            </button>
+
+            <div id="highCardArea"></div>
+
+        </div>
+
+    `;
+
+}
+
+
+function drawHigh(){
+
+    const card=makeCard();
+
+    let amount=0;
+
+    if(card.value===13)
+        amount=150;
+
+    else if(card.value>=11)
+        amount=100;
+
+    else if(card.value>=8)
+        amount=60;
+
+    else if(card.value>=5)
+        amount=30;
+
+    document.getElementById(
+        "highCardArea"
+    ).innerHTML=
+        cardHTML(card);
+
+    setTimeout(
+        function(){
+
+            finish(
+                amount,
+                "You drew "
+                +cardName(card)
+                +"!"
+            );
+
+        },
+        600
+    );
+
+}
+
+
+/* =========================================
+   DUEL
+========================================= */
+
+function duel(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>CARD DUEL</h1>
+
+            <p>
+                Draw against the arcade.
+            </p>
+
+            <button onclick="playDuel()">
+                DRAW
+            </button>
+
+            <div
+            id="duelCards"
+            class="cards">
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function playDuel(){
+
+    const player=makeCard();
+
+    const enemy=makeCard();
+
+    let amount=0;
+
+    let message;
+
+
+    if(
+        player.value>enemy.value
+    ){
+
+        amount=120;
+
+        message="You won the duel!";
+
+    }
+
+    else if(
+        player.value===enemy.value
+    ){
+
+        amount=40;
+
+        message="The duel was a tie.";
+
+    }
+
+    else{
+
+        amount=0;
+
+        message="The arcade won.";
+
+    }
+
+
+    document.getElementById(
+        "duelCards"
+    ).innerHTML=
+        cardHTML(player)+
+        cardHTML(enemy);
+
+
+    setTimeout(
+        function(){
+
+            finish(
+                amount,
+                message+
+                "<br>You: "+
+                cardName(player)+
+                " | Arcade: "+
+                cardName(enemy)
+            );
+
+        },
+        700
+    );
+
+}
+
+
+/* =========================================
+   VOID 21
+========================================= */
+
+function twentyOne(){
+
+    window.total21=0;
+
+    window.cards21=[];
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>VOID 21</h1>
+
+            <div
+            id="cards21"
+            class="cards">
+            </div>
+
+            <h2 id="total21">
+                Total: 0
+            </h2>
+
+            <button onclick="draw21()">
+                DRAW
+            </button>
+
+            <button onclick="stop21()">
+                STOP
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function draw21(){
+
+    const card=makeCard();
+
+    const value=
+        Math.min(
+            card.value,
+            10
+        );
+
+    window.cards21.push(card);
+
+    window.total21+=value;
+
+
+    document.getElementById(
+        "cards21"
+    ).innerHTML=
+        window.cards21
+        .map(cardHTML)
+        .join("");
+
+
+    document.getElementById(
+        "total21"
+    ).textContent=
+        "Total: "+
+        window.total21;
+
+
+    if(
+        window.total21>21
+    ){
+
+        finish(
+            0,
+            "You went over 21!"
+        );
+
+    }
+
+}
+
+
+function stop21(){
+
+    if(
+        window.total21===0
+    ){
+        return;
+    }
+
+
+    let amount=0;
+
+
+    if(window.total21===21)
+        amount=250;
+
+    else if(window.total21>=19)
+        amount=150;
+
+    else if(window.total21>=16)
+        amount=80;
+
+    else if(window.total21>=12)
+        amount=30;
+
+
+    finish(
+        amount,
+        "You stopped at "
+        +window.total21+"."
+    );
+
+}
+
+
+/* =========================================
+   ODD / EVEN
+========================================= */
+
+function oddEven(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>ODD OR EVEN</h1>
+
+            <p>
+                Predict the next card.
+            </p>
+
+            <div class="choiceRow">
+
+                <button
+                onclick="chooseOddEven('odd')">
+                    ODD
+                </button>
+
+                <button
+                onclick="chooseOddEven('even')">
+                    EVEN
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function chooseOddEven(choice){
+
+    const card=makeCard();
+
+    const actual=
+        card.value%2===0
+        ?"even"
+        :"odd";
+
+    const amount=
+        choice===actual
+        ?80
+        :0;
+
+
+    finish(
+        amount,
+        "The card was "
+        +cardName(card)
+        +" — "
+        +actual.toUpperCase()
+        +"."
+    );
+
+}
+
+
+/* =========================================
+   ROYAL DRAW
+========================================= */
+
+function royalDraw(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>ROYAL DRAW</h1>
+
+            <p>
+                Draw five cards.
+            </p>
+
+            <button onclick="drawRoyal()">
+                DRAW FIVE
+            </button>
+
+            <div
+            id="royalCards"
+            class="cards">
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function drawRoyal(){
+
+    const cards=[];
+
+
+    for(
+        let i=0;
+        i<5;
+        i++
+    ){
+
+        cards.push(
+            makeCard()
+        );
+
+    }
+
+
+    document.getElementById(
+        "royalCards"
+    ).innerHTML=
+        cards.map(cardHTML).join("");
+
+
+    let royals=0;
+
+
+    cards.forEach(
+        function(card){
+
+            if(card.value>=11)
+                royals++;
+
+        }
+    );
+
+
+    let amount=0;
+
+
+    if(royals>=3)
+        amount=300;
+
+    else if(royals===2)
+        amount=150;
+
+    else if(royals===1)
+        amount=60;
+
+
+    setTimeout(
+        function(){
+
+            finish(
+                amount,
+                "You found "
+                +royals
+                +" royal cards!"
+            );
+
+        },
+        800
+    );
+
+}
+
+
+/* =========================================
+   MEMORY
+========================================= */
+
+function memoryGame(){
+
+    const sequence=[];
+
+
+    for(
+        let i=0;
+        i<4;
+        i++
+    ){
+
+        sequence.push(
+            makeCard()
+        );
+
+    }
+
+
+    window.memorySequence=sequence;
+
+    window.memoryStep=0;
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>CARD MEMORY</h1>
+
+            <p>
+                Memorize the sequence.
+            </p>
+
+            <div
+            id="memoryCards"
+            class="cards">
+            </div>
+
+        </div>
+
+    `;
+
+
+    let html="";
+
+
+    sequence.forEach(
+        function(card){
+
+            html+=cardHTML(card);
+
+        }
+    );
+
+
+    document.getElementById(
+        "memoryCards"
+    ).innerHTML=html;
+
+
+    setTimeout(
+        function(){
+
+            memoryInput();
+
+        },
+        2500
+    );
+
+}
+
+
+function memoryInput(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>CARD MEMORY</h1>
+
+            <p>
+                What was the first card?
+            </p>
+
+            <div class="choiceRow">
+
+                <button onclick="memoryGuess(1)">
+                    A
+                </button>
+
+                <button onclick="memoryGuess(11)">
+                    J
+                </button>
+
+                <button onclick="memoryGuess(12)">
+                    Q
+                </button>
+
+                <button onclick="memoryGuess(13)">
+                    K
+                </button>
+
+            </div>
+
+            <p>
+                Or choose the card value:
+            </p>
+
+            <div
+            id="numberChoices"
+            class="choiceRow">
+            </div>
+
+        </div>
+
+    `;
+
+
+    let html="";
+
+
+    for(
+        let i=2;
+        i<=10;
+        i++
+    ){
+
+        html+=`
+
+            <button
+            onclick="memoryGuess(${i})">
+                ${i}
+            </button>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "numberChoices"
+    ).innerHTML=html;
+
+}
+
+
+function memoryGuess(value){
+
+    const correct=
+        window.memorySequence[0].value;
+
+
+    if(value===correct){
+
+        finish(
+            180,
+            "You remembered the first card!"
+        );
+
+    }else{
+
+        finish(
+            0,
+            "The first card was "
+            +cardName(
+                window.memorySequence[0]
+            )
+            +"."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   STARTUP
+========================================= */
+
+updateCredits();
+
+
+window.addEventListener(
+    "pagehide",
+    save
+);
+
+</script>
+
+</body>
+  </html>
