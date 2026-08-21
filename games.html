@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VOID ARCADE II - CHALLENGE FLOOR</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#070707;
+    color:#eee;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    padding:18px 24px;
+    background:#101010;
+    border-bottom:1px solid #444;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:bold;
+    letter-spacing:4px;
+}
+
+.credits{
+    padding:10px 15px;
+    background:#191919;
+    border:1px solid #555;
+}
+
+main{
+    width:92%;
+    max-width:1100px;
+    margin:auto;
+    padding:25px 0;
+}
+
+.panel{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;
+}
+
+.game{
+    background:#181818;
+    border:1px solid #444;
+    padding:20px;
+    min-height:255px;
+    display:flex;
+    flex-direction:column;
+}
+
+.game:hover{
+    border-color:#aaa;
+}
+
+.icon{
+    font-size:42px;
+}
+
+.game p{
+    color:#999;
+    line-height:1.5;
+    flex:1;
+}
+
+button{
+    background:#1d1d1d;
+    color:#fff;
+    border:1px solid #666;
+    padding:12px 18px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    background:#333;
+}
+
+button:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.center{
+    text-align:center;
+}
+
+.big{
+    font-size:65px;
+    margin:25px;
+}
+
+.bar{
+    height:36px;
+    width:100%;
+    background:#222;
+    border:1px solid #555;
+    margin:30px 0;
+    position:relative;
+}
+
+.marker{
+    position:absolute;
+    top:0;
+    width:5px;
+    height:100%;
+    background:#fff;
+}
+
+.zone{
+    position:absolute;
+    top:0;
+    left:45%;
+    width:10%;
+    height:100%;
+    background:#555;
+}
+
+.memoryGrid{
+    display:grid;
+    grid-template-columns:repeat(3,75px);
+    gap:10px;
+    justify-content:center;
+    margin:25px;
+}
+
+.tile{
+    width:75px;
+    height:75px;
+    background:#181818;
+    border:1px solid #666;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+}
+
+.tile.active{
+    background:#eee;
+    color:#111;
+}
+
+.choiceRow{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin:25px 0;
+}
+
+input{
+    background:#111;
+    color:#fff;
+    border:1px solid #666;
+    padding:12px;
+    font-size:18px;
+    text-align:center;
+}
+
+.message{
+    min-height:35px;
+    margin:20px;
+    color:#aaa;
+}
+
+.allin{
+    border:1px solid #777;
+    background:#141414;
+}
+
+.warning{
+    font-size:20px;
+    margin:20px 0;
+}
+
+footer{
+    text-align:center;
+    color:#444;
+    padding:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+CHALLENGE FLOOR
+</div>
+
+<div class="credits">
+CREDITS:
+<strong id="credits">500</strong>
+</div>
+
+</header>
+
+
+<main>
+
+<section id="home">
+
+<div class="panel">
+
+<h1>CHALLENGE FLOOR</h1>
+
+<p>
+Skill games, timing tests and
+high-risk challenges.
+</p>
+
+<p>
+Credits are shared across the
+entire arcade.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+
+<div class="game">
+
+<div class="icon">⚡</div>
+
+<h2>REACTION</h2>
+
+<p>
+Wait for the signal and click
+as quickly as possible.
+</p>
+
+<button onclick="startGame('reaction')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🎯</div>
+
+<h2>PRECISION</h2>
+
+<p>
+Stop the moving marker as close
+to the center as possible.
+</p>
+
+<button onclick="startGame('precision')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🧠</div>
+
+<h2>MEMORY GRID</h2>
+
+<p>
+Memorize the highlighted squares
+and repeat the pattern.
+</p>
+
+<button onclick="startGame('memory')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🔢</div>
+
+<h2>QUICK MATH</h2>
+
+<p>
+Solve five equations correctly.
+</p>
+
+<button onclick="startGame('math')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">🎯</div>
+
+<h2>NUMBER TARGET</h2>
+
+<p>
+Choose the number closest to
+the hidden target.
+</p>
+
+<button onclick="startGame('target')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game">
+
+<div class="icon">⏱️</div>
+
+<h2>ONE SECOND</h2>
+
+<p>
+Stop the timer as close to one
+second as possible.
+</p>
+
+<button onclick="startGame('second')">
+PLAY
+</button>
+
+</div>
+
+
+<div class="game allin">
+
+<div class="icon">💀</div>
+
+<h2>ALL-IN CHALLENGE</h2>
+
+<p>
+Risk every credit you currently
+have on one extremely difficult
+skill challenge.
+</p>
+
+<div class="warning">
+CURRENT CREDITS:
+<strong id="allInAmount">
+500
+</strong>
+</div>
+
+<button onclick="startAllIn()">
+START ALL-IN
+</button>
+
+</div>
+
+
+</div>
+
+
+<div class="panel">
+
+<button onclick="location.href='index.html'">
+← MAIN ARCADE
+</button>
+
+</div>
+
+</section>
+
+
+<section
+id="game"
+style="display:none">
+
+<div class="panel">
+
+<div id="gameArea"></div>
+
+<br>
+
+<button onclick="home()">
+← LEAVE GAME
+</button>
+
+</div>
+
+</section>
+
+
+<section
+id="result"
+style="display:none">
+
+<div class="panel center">
+
+<h1>RESULT</h1>
+
+<div id="resultText"></div>
+
+<button onclick="home()">
+BACK TO CHALLENGE FLOOR
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+VOID ARCADE II
+</footer>
+
+
+<script>
+
+/* =====================================
+   SHARED SAVE
+===================================== */
+
+const SAVE_KEY="voidArcadeII";
+
+
+const DEFAULT_DATA={
+    credits:500,
+    gamesPlayed:0,
+    totalEarned:0,
+    bestCredits:500,
+    level:1
+};
+
+
+function loadData(){
+
+    let data=null;
+
+    try{
+
+        data=JSON.parse(
+            localStorage.getItem(SAVE_KEY)
+        );
+
+    }catch(error){
+
+        data=null;
+
+    }
+
+
+    if(
+        !data ||
+        typeof data!=="object"
+    ){
+
+        data={
+            ...DEFAULT_DATA
+        };
+
+        localStorage.setItem(
+            SAVE_KEY,
+            JSON.stringify(data)
+        );
+
+    }
+
+
+    if(typeof data.credits!=="number")
+        data.credits=500;
+
+    if(typeof data.gamesPlayed!=="number")
+        data.gamesPlayed=0;
+
+    if(typeof data.totalEarned!=="number")
+        data.totalEarned=0;
+
+    if(typeof data.bestCredits!=="number")
+        data.bestCredits=data.credits;
+
+    if(typeof data.level!=="number")
+        data.level=1;
+
+
+    return data;
+
+}
+
+
+let data=loadData();
+
+
+function save(){
+
+    localStorage.setItem(
+        SAVE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+function updateCredits(){
+
+    document.getElementById(
+        "credits"
+    ).textContent=
+        Math.floor(data.credits);
+
+
+    document.getElementById(
+        "allInAmount"
+    ).textContent=
+        Math.floor(data.credits);
+
+}
+
+
+/* =====================================
+   NORMAL ENTRY
+===================================== */
+
+function enterGame(cost){
+
+    if(
+        data.credits<cost
+    ){
+
+        alert(
+            "You don't have enough credits."
+        );
+
+        return false;
+
+    }
+
+
+    data.credits-=cost;
+
+    save();
+
+    updateCredits();
+
+    return true;
+
+}
+
+
+/* =====================================
+   REWARD
+===================================== */
+
+function reward(amount){
+
+    amount=Math.max(
+        0,
+        Math.floor(amount)
+    );
+
+
+    data.credits+=amount;
+
+    data.totalEarned+=amount;
+
+
+    if(
+        data.credits>
+        data.bestCredits
+    ){
+
+        data.bestCredits=
+            data.credits;
+
+    }
+
+
+    save();
+
+    updateCredits();
+
+}
+
+
+/* =====================================
+   SCREENS
+===================================== */
+
+function showGame(){
+
+    document.getElementById(
+        "home"
+    ).style.display="none";
+
+    document.getElementById(
+        "game"
+    ).style.display="block";
+
+    document.getElementById(
+        "result"
+    ).style.display="none";
+
+}
+
+
+function showResult(){
+
+    document.getElementById(
+        "home"
+    ).style.display="none";
+
+    document.getElementById(
+        "game"
+    ).style.display="none";
+
+    document.getElementById(
+        "result"
+    ).style.display="block";
+
+}
+
+
+function home(){
+
+    if(
+        window.precisionTimer
+    ){
+
+        clearInterval(
+            window.precisionTimer
+        );
+
+    }
+
+
+    document.getElementById(
+        "home"
+    ).style.display="block";
+
+    document.getElementById(
+        "game"
+    ).style.display="none";
+
+    document.getElementById(
+        "result"
+    ).style.display="none";
+
+    updateCredits();
+
+}
+
+
+/* =====================================
+   FINISH NORMAL GAME
+===================================== */
+
+function finish(
+    amount,
+    message
+){
+
+    data.gamesPlayed++;
+
+    reward(amount);
+
+    document.getElementById(
+        "resultText"
+    ).innerHTML=`
+
+        <div class="big">
+            +${amount}
+        </div>
+
+        <p>
+            ${message}
+        </p>
+
+        <p>
+            Current credits:
+            <strong>
+                ${Math.floor(data.credits)}
+            </strong>
+        </p>
+
+    `;
+
+    showResult();
+
+}
+
+
+/* =====================================
+   START NORMAL GAME
+===================================== */
+
+function startGame(type){
+
+    const costs={
+        reaction:10,
+        precision:10,
+        memory:10,
+        math:10,
+        target:10,
+        second:10
+    };
+
+
+    if(
+        !enterGame(
+            costs[type]
+        )
+    ){
+
+        return;
+
+    }
+
+
+    showGame();
+
+
+    if(type==="reaction")
+        reactionGame();
+
+    else if(type==="precision")
+        precisionGame();
+
+    else if(type==="memory")
+        memoryGame();
+
+    else if(type==="math")
+        mathGame();
+
+    else if(type==="target")
+        targetGame();
+
+    else if(type==="second")
+        secondGame();
+
+}
+
+
+/* =====================================
+   REACTION
+===================================== */
+
+function reactionGame(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>REACTION</h1>
+
+            <p>
+                Wait for CLICK.
+            </p>
+
+            <button
+            id="reactionButton"
+            disabled
+            style="
+            width:220px;
+            height:100px;
+            font-size:24px;
+            ">
+                WAIT...
+            </button>
+
+        </div>
+
+    `;
+
+
+    const delay=
+        1500+
+        Math.random()*2500;
+
+
+    window.reactionTimer=
+        setTimeout(
+            function(){
+
+                const button=
+                    document.getElementById(
+                        "reactionButton"
+                    );
+
+
+                if(!button)
+                    return;
+
+
+                button.disabled=false;
+
+                button.textContent=
+                    "CLICK!";
+
+
+                window.reactionStart=
+                    performance.now();
+
+
+                button.onclick=
+                    reactionClick;
+
+            },
+            delay
+        );
+
+}
+
+
+function reactionClick(){
+
+    const time=
+        performance.now()-
+        window.reactionStart;
+
+
+    let amount=10;
+
+
+    if(time<250)
+        amount=250;
+
+    else if(time<400)
+        amount=175;
+
+    else if(time<600)
+        amount=100;
+
+    else if(time<900)
+        amount=50;
+
+
+    clearTimeout(
+        window.reactionTimer
+    );
+
+
+    finish(
+        amount,
+        "Reaction time: "
+        +"<strong>"
+        +Math.round(time)
+        +" ms</strong>"
+    );
+
+}
+
+
+/* =====================================
+   PRECISION
+===================================== */
+
+function precisionGame(){
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>PRECISION</h1>
+
+            <p>
+                Stop the marker at the center.
+            </p>
+
+            <div class="bar">
+
+                <div class="zone"></div>
+
+                <div
+                id="marker"
+                class="marker">
+                </div>
+
+            </div>
+
+            <button onclick="stopPrecision()">
+                STOP
+            </button>
+
+        </div>
+
+    `;
+
+
+    window.precisionPosition=0;
+
+    window.precisionDirection=1;
+
+
+    window.precisionTimer=
+        setInterval(
+            function(){
+
+                window.precisionPosition+=
+                    window.precisionDirection*2;
+
+
+                if(
+                    window.precisionPosition>=100
+                ){
+
+                    window.precisionPosition=100;
+
+                    window.precisionDirection=-1;
+
+                }
+
+
+                if(
+                    window.precisionPosition<=0
+                ){
+
+                    window.precisionPosition=0;
+
+                    window.precisionDirection=1;
+
+                }
+
+
+                const marker=
+                    document.getElementById(
+                        "marker"
+                    );
+
+
+                if(marker){
+
+                    marker.style.left=
+                        window.precisionPosition+
+                        "%";
+
+                }
+
+            },
+            35
+        );
+
+}
+
+
+function stopPrecision(){
+
+    clearInterval(
+        window.precisionTimer
+    );
+
+
+    const distance=
+        Math.abs(
+            window.precisionPosition-50
+        );
+
+
+    let amount=5;
+
+
+    if(distance<=3)
+        amount=300;
+
+    else if(distance<=8)
+        amount=180;
+
+    else if(distance<=15)
+        amount=90;
+
+    else if(distance<=25)
+        amount=40;
+
+
+    finish(
+        amount,
+        "Marker position: "
+        +window.precisionPosition.toFixed(1)
+        +"%"
+    );
+
+}
+
+
+/* =====================================
+   MEMORY GRID
+===================================== */
+
+function memoryGame(){
+
+    window.memoryPattern=[];
+
+    window.memoryStep=0;
+
+
+    while(
+        window.memoryPattern.length<4
+    ){
+
+        const n=
+            Math.floor(
+                Math.random()*9
+            );
+
+
+        if(
+            !window.memoryPattern.includes(n)
+        ){
+
+            window.memoryPattern.push(n);
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>MEMORY GRID</h1>
+
+            <p id="memoryText">
+                Memorize the pattern.
+            </p>
+
+            <div
+            id="memoryGrid"
+            class="memoryGrid">
+            </div>
+
+        </div>
+
+    `;
+
+
+    for(
+        let i=0;
+        i<9;
+        i++
+    ){
+
+        const tile=
+            document.createElement(
+                "div"
+            );
+
+
+        tile.className="tile";
+
+        tile.dataset.index=i;
+
+
+        document.getElementById(
+            "memoryGrid"
+        ).appendChild(tile);
+
+    }
+
+
+    window.memoryPattern.forEach(
+        function(index,i){
+
+            setTimeout(
+                function(){
+
+                    const tile=
+                        document.querySelector(
+                            '[data-index="'+
+                            index+
+                            '"]'
+                        );
+
+
+                    if(tile)
+                        tile.classList.add(
+                            "active"
+                        );
+
+                },
+                i*500
+            );
+
+
+            setTimeout(
+                function(){
+
+                    const tile=
+                        document.querySelector(
+                            '[data-index="'+
+                            index+
+                            '"]'
+                        );
+
+
+                    if(tile)
+                        tile.classList.remove(
+                            "active"
+                        );
+
+                },
+                i*500+350
+            );
+
+        }
+    );
+
+
+    setTimeout(
+        enableMemory,
+        2500
+    );
+
+}
+
+
+function enableMemory(){
+
+    document.getElementById(
+        "memoryText"
+    ).textContent=
+        "Repeat the pattern.";
+
+
+    document.querySelectorAll(
+        ".tile"
+    ).forEach(
+        function(tile){
+
+            tile.onclick=
+                function(){
+
+                    memoryPick(
+                        Number(
+                            tile.dataset.index
+                        ),
+                        tile
+                    );
+
+                };
+
+        }
+    );
+
+}
+
+
+function memoryPick(
+    index,
+    tile
+){
+
+    if(
+        index===
+        window.memoryPattern[
+            window.memoryStep
+        ]
+    ){
+
+        tile.classList.add(
+            "active"
+        );
+
+
+        window.memoryStep++;
+
+
+        if(
+            window.memoryStep===
+            window.memoryPattern.length
+        ){
+
+            finish(
+                250,
+                "Perfect memory!"
+            );
+
+        }
+
+    }else{
+
+        finish(
+            5,
+            "Wrong square."
+
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   MATH
+===================================== */
+
+function mathGame(){
+
+    window.mathRound=0;
+
+    window.mathScore=0;
+
+    nextMath();
+
+}
+
+
+function nextMath(){
+
+    window.mathRound++;
+
+
+    if(
+        window.mathRound>5
+    ){
+
+        const amount=
+            10+
+            window.mathScore*45;
+
+
+        finish(
+            amount,
+            "Score: "
+            +window.mathScore
+            +"/5"
+        );
+
+        return;
+
+    }
+
+
+    const a=
+        Math.floor(
+            Math.random()*12
+        )+1;
+
+
+    const b=
+        Math.floor(
+            Math.random()*12
+        )+1;
+
+
+    const ops=[
+        "+",
+        "-",
+        "*"
+    ];
+
+
+    const op=
+        ops[
+            Math.floor(
+                Math.random()*3
+            )
+        ];
+
+
+    let answer;
+
+
+    if(op==="+")
+        answer=a+b;
+
+    else if(op==="-")
+        answer=a-b;
+
+    else
+        answer=a*b;
+
+
+    window.mathAnswer=answer;
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>QUICK MATH</h1>
+
+            <p>
+                Round
+                ${window.mathRound}
+                / 5
+            </p>
+
+            <div class="big">
+                ${a} ${op} ${b}
+            </div>
+
+            <input
+            id="mathInput"
+            type="number">
+
+            <button onclick="submitMath()">
+                ANSWER
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function submitMath(){
+
+    const value=
+        Number(
+            document.getElementById(
+                "mathInput"
+            ).value
+        );
+
+
+    if(
+        value===
+        window.mathAnswer
+    ){
+
+        window.mathScore++;
+
+    }
+
+
+    nextMath();
+
+}
+
+
+/* =====================================
+   TARGET
+===================================== */
+
+function targetGame(){
+
+    window.target=
+        Math.floor(
+            Math.random()*100
+        )+1;
+
+
+    window.targetChoices=[];
+
+
+    while(
+        window.targetChoices.length<5
+    ){
+
+        const n=
+            Math.floor(
+                Math.random()*100
+            )+1;
+
+
+        if(
+            !window.targetChoices.includes(n)
+        ){
+
+            window.targetChoices.push(n);
+
+        }
+
+    }
+
+
+    let html="";
+
+
+    window.targetChoices.forEach(
+        function(n){
+
+            html+=`
+
+                <button
+                onclick="chooseTarget(${n})">
+                    ${n}
+                </button>
+
+            `;
+
+        }
+    );
+
+
+    document.getElementById(
+        "gameArea"
+    ).innerHTML=`
+
+        <div class="center">
+
+            <h1>NUMBER TARGET</h1>
+
+            <p>
+                Pick the closest number.
+            </p>
+
+            <div class="choiceRow">
+                ${html}
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function chooseTarget(number){
+
+    const distance=
+        Math.abs(
+            number-window.target
+        );
+
+
+    let amount=5;
+
+
+    if(distance===0)
+        amount=400;
+
+    else if(distance<=3)
+        amount=250;
+
+    else if(distance<=8)
+        amount=130;
+
+    else if(distance<=15)
+        amount=60;
+
+
+    finish(
+        amount,
+        "You chose "
+        +number
+        +". Target: "
+        +window.target
+    );
+
+}
+
+
+/* =====================================
+   ONE S
